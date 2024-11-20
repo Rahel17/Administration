@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Pemasukan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PemasukanController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+
 
     public function index()
     {
@@ -45,7 +47,11 @@ class PemasukanController extends Controller
         ]);
     
         if ($request->hasFile('dokumen')) {
-            $validated['dokumen'] = $request->file('dokumen')->store('dokumen', 'public');
+            $path = $request->file('dokumen')->store('dokumen', 'public');
+            if (!$path) {
+                return redirect()->back()->withErrors(['dokumen' => 'Gagal menyimpan file dokumen.']);
+            }
+            $validated['dokumen'] = $path;
         }
     
         Pemasukan::create($validated);
@@ -59,7 +65,8 @@ class PemasukanController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $pemasukans = Pemasukan::findOrFail($id);
+        return view('pemasukan.show', compact('pemasukans'));
     }
 
     /**
@@ -67,22 +74,49 @@ class PemasukanController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $pemasukans = Pemasukan::findOrFail($id);
+        return view('pemasukan.edit', compact('pemasukans'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        //
+    public function update(Request $request, $id)
+{
+    $validated = $request->validate([
+        'tanggal' => 'required|date',
+        'kategori' => 'required|string|max:255',
+        'uraian' => 'required|string',
+        'bidang' => 'required|string',
+        'nominal' => 'required|numeric',
+        'penganggungjawab' => 'required|string',
+        'dokumen' => 'nullable|file|mimes:pdf,jpg,png',
+    ]);
+
+    $pemasukan = Pemasukan::findOrFail($id);
+
+    if ($request->hasFile('dokumen')) {
+        // Hapus dokumen lama
+        if ($pemasukan->dokumen) {
+            Storage::disk('public')->delete($pemasukan->dokumen);
+        }
+        // Simpan dokumen baru
+        $validated['dokumen'] = $request->file('dokumen')->store('dokumen', 'public');
     }
+
+    $pemasukan->update($validated);
+
+    return redirect()->route('pemasukan.index')->with('success', 'Data pemasukan berhasil diperbarui.');
+}
+
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        //
+        $pemasukans = Pemasukan::findOrFail($id);
+        $pemasukans->delete();
+        return redirect()->route('pemasukan.index')->with('success', 'Pemasukan berhasil dihapus.');
     }
 }
