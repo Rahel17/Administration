@@ -31,7 +31,7 @@ class User extends Authenticatable
 
     public function kas()
     {
-        return $this->hasOne(Kas::class);
+        return $this->hasMany(Kas::class);
     }
 
     /**

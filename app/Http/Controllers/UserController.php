@@ -2,20 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Kas;
 use Illuminate\Http\Request;
 
-class KasController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $kas = Kas::orderBy('tanggal', 'desc')->get();
-
-        // Return data ke view dengan nama variabel `pemasukans`
-        return view('kas.index', compact('kas'));
+        //
     }
 
     /**
@@ -39,8 +35,7 @@ class KasController extends Controller
      */
     public function show(string $id)
     {
-        $kas = Kas::findOrFail($id);
-        return view('kas.show', compact('kas'));
+        //
     }
 
     /**

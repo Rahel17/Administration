@@ -28,8 +28,6 @@ class KasSeeder extends Seeder
                 'Agustus'=>5000,
                 'September'=>5000,
                 'Oktober'=>5000,
-                'November'=>5000,
-                'Desember'=>5000
             ]),
             'keterangan' => 'lunas'
         ]);
