@@ -21,6 +21,14 @@
         <!-- endinject -->
         <link rel="shortcut icon" href="{{ asset('asset/images/logo-himatif.png') }}">
         {{-- datatables --}}
+
+        <!-- Bootstrap CSS -->
+        {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> --}}
+
+        <!-- Bootstrap JavaScript Bundle -->
+        {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> --}}
+
+
         <!-- jQuery -->
         <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     
@@ -130,18 +138,18 @@
             </li>
 
             <li class="nav-item">
-            <a class="nav-link" href="{{ route('dashboard') }}" aria-expanded="false" aria-controls="ui-basic">
-                <i class="icon-paper menu-icon"></i>
+            <a class="nav-link" href="{{ route('kas.index') }}" aria-expanded="false" aria-controls="ui-basic">
+                <i class="icon-layout menu-icon"></i>
                 <span class="menu-title">Kas Anggota</span>
             </a>
             </li>
 
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link" href="{{ route('dashboard') }}" aria-expanded="false" aria-controls="ui-basic">
                     <i class="icon-paper menu-icon"></i>
                     <span class="menu-title">Saldo</span>
                 </a>
-            </li>
+            </li> --}}
 
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('dashboard') }}" aria-expanded="false" aria-controls="ui-basic">
@@ -175,18 +183,18 @@
             </li>
 
             <li class="nav-item">
-            <a class="nav-link" href="{{ route('dashboard') }}" aria-expanded="false" aria-controls="ui-basic">
-                <i class="icon-paper menu-icon"></i>
+            <a class="nav-link" href="{{ route('kas.index') }}" aria-expanded="false" aria-controls="ui-basic">
+                <i class="icon-layout menu-icon"></i>
                 <span class="menu-title">Kas Anggota</span>
             </a>
             </li>
 
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link" href="{{ route('dashboard') }}" aria-expanded="false" aria-controls="ui-basic">
                     <i class="icon-paper menu-icon"></i>
                     <span class="menu-title">Saldo</span>
                 </a>
-            </li>
+            </li> --}}
 
             @endif
 
@@ -199,8 +207,8 @@
             </li>
 
             <li class="nav-item">
-            <a class="nav-link" href="{{ route('dashboard') }}">
-                <i class="icon-paper menu-icon"></i>
+            <a class="nav-link" href="{{ route('kas.index') }}">
+                <i class="icon-layout menu-icon"></i>
                 <span class="menu-title">Kas Anggota</span>
             </a>
             </li>
@@ -303,6 +311,7 @@
   <script src="{{ asset('asset/js/dashboard.js') }}"></script>
   <script src="{{ asset('asset/js/Chart.roundedBarCharts.js') }}"></script>
   <!-- End custom js for this page-->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6hCUbhE6gxn7gkaeZMCYxqG2XsEzl4UpvW46pAjQ63VqH59gq" crossorigin="anonymous"></script>
 
   
 </body>

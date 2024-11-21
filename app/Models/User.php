@@ -29,6 +29,11 @@ class User extends Authenticatable
         return $this->hasOne(Anggota::class);
     }
 
+    public function kas()
+    {
+        return $this->hasOne(Kas::class);
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

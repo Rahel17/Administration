@@ -80,68 +80,69 @@
                 </div>
           </div>
                   <!-- Modal Tambah Pemasukan -->
-                  <div class="modal fade" id="modalTambahPemasukan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                      <div class="modal-dialog" role="document">
-                          <div class="modal-content">
-                              <form action="{{ route('pemasukan.store') }}" method="POST" enctype="multipart/form-data">
-                                  @csrf
-                                  <div class="modal-header">
-                                      <h5 class="modal-title" id="createPemasukanModalLabel">Tambah Pemasukan Baru</h5>
-                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                  </div>
-                                  <div class="modal-body">
-                                      <!-- Input Form -->
-                                      <div class="mb-3">
-                                          <label for="tanggal" class="form-label">Tanggal</label>
-                                          <input type="date" class="form-control" id="tanggal" name="tanggal" required>
-                                      </div>
-                                      <div class="mb-3">
-                                          <label for="kategori" class="form-label">Kategori</label>
-                                          <select class="form-select" id="kategori" name="kategori" required>
-                                              <option value="" disabled selected>Pilih Kategori</option>
-                                              <option value="proposal">Proposal</option>
-                                              <option value="sisa_proker">Sisa Proker</option>
-                                              <option value="kas_wajib">Kas Wajib</option>
-                                              <option value="lainnya">Lainnya</option>
-                                          </select>
-                                      </div>
-                                      <div class="mb-3">
-                                          <label for="uraian" class="form-label">Uraian</label>
-                                          <textarea class="form-control" id="uraian" name="uraian" rows="3" required></textarea>
-                                      </div>
-                                      <div class="mb-3">
-                                          <label for="bidang" class="form-label">Bidang</label>
-                                          <select class="form-select" id="bidang" name="bidang" required>
-                                              <option value="" disabled selected>Pilih Bidang</option>
-                                              <option value="Inti">Inti</option>
-                                              <option value="Pemberdayaan Sumber Daya Manusia">PSDM</option>
-                                              <option value="Hubungan Masyarakat">Kerohanian</option>
-                                              <option value="Komunikasi dan Informasi">Kominfo</option>
-                                              <option value="Dana Usaha">Dana Usaha</option>
-                                              <option value="Minat Bakat">Minat Bakat</option>
-                                          </select>
-                                      </div>
-                                      <div class="mb-3">
-                                          <label for="nominal" class="form-label">Nominal</label>
-                                          <input type="number" class="form-control" id="nominal" name="nominal" required>
-                                      </div>
-                                      <div class="mb-3">
-                                          <label for="penganggungjawab" class="form-label">Penanggungjawab</label>
-                                          <input type="text" class="form-control" id="penganggungjawab" name="penganggungjawab" required>
-                                      </div>
-                                      <div class="mb-3">
-                                          <label for="dokumen" class="form-label">Dokumen Pendukung</label>
-                                          <input type="file" class="form-control" id="dokumen" name="dokumen">
-                                      </div>
-                                  </div>
-                                  <div class="modal-footer">
-                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                      <button type="submit" class="btn btn-primary">Simpan</button>
-                                  </div>
-                              </form>
-                          </div>
-                      </div>
-                  </div>
+                <div class="modal fade" id="modalTambahPemasukan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <form action="{{ route('pemasukan.store') }}" method="POST" enctype="multipart/form-data" class="forms-sample">
+                                @csrf
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="createPemasukanModalLabel">Tambah Pemasukan Baru</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <!-- Input Form -->
+                                    <div class="form-group">
+                                        <label for="tanggal">Tanggal</label>
+                                        <input type="date" class="form-control" id="tanggal" name="tanggal" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="kategori">Kategori</label>
+                                        <select class="form-select" id="kategori" name="kategori" required>
+                                            <option value="" disabled selected>Pilih Kategori</option>
+                                            <option value="proposal">Proposal</option>
+                                            <option value="sisa_proker">Sisa Proker</option>
+                                            {{-- <option value="kas_wajib">Kas Wajib</option> --}}
+                                            <option value="lainnya">Lainnya</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="uraian">Uraian</label>
+                                        <textarea class="form-control" id="uraian" name="uraian" rows="3" required></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="bidang">Bidang</label>
+                                        <select class="form-select" id="bidang" name="bidang" required>
+                                            <option value="" disabled selected>Pilih Bidang</option>
+                                            <option value="Inti">Inti</option>
+                                            <option value="Pemberdayaan Sumber Daya Manusia">PSDM</option>
+                                            <option value="Hubungan Masyarakat">Kerohanian</option>
+                                            <option value="Komunikasi dan Informasi">Kominfo</option>
+                                            <option value="Dana Usaha">Dana Usaha</option>
+                                            <option value="Minat Bakat">Minat Bakat</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="nominal">Nominal</label>
+                                        <input type="number" class="form-control" id="nominal" name="nominal" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="penganggungjawab">Penanggungjawab</label>
+                                        <input type="text" class="form-control" id="penganggungjawab" name="penganggungjawab" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="dokumen">Dokumen Pendukung</label>
+                                        <input type="file" class="form-control" id="dokumen" name="dokumen">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-light" data-dismiss="modal">Batal</button>
+                                    <button type="submit" class="btn btn-primary">Simpan</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
 
                   @foreach ($pemasukans as $dt)
                       <!-- Modal Edit Pemasukan -->
@@ -166,7 +167,7 @@
                                             <select class="form-select" id="kategori{{ $dt->id }}" name="kategori" required>
                                                 <option value="proposal" {{ $dt->kategori === 'proposal' ? 'selected' : '' }}>Proposal</option>
                                                 <option value="sisa_proker" {{ $dt->kategori === 'sisa_proker' ? 'selected' : '' }}>Sisa Proker</option>
-                                                <option value="kas_wajib" {{ $dt->kategori === 'kas_wajib' ? 'selected' : '' }}>Kas Wajib</option>
+                                                {{-- <option value="kas_wajib" {{ $dt->kategori === 'kas_wajib' ? 'selected' : '' }}>Kas Wajib</option> --}}
                                             </select>
                                         </div>
                                         <div class="mb-3">

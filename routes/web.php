@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\KasController;
 use App\Http\Controllers\AnggotaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PemasukanController;
@@ -41,6 +42,8 @@ Route::post('/pengeluaran/store', [PengeluaranController::class, 'store'])->name
 Route::get('/pengeluaran/edit/{id}', [PengeluaranController::class, 'edit'])->name('pengeluaran.edit');
 Route::put('/pengeluaran/update/{id}', [PengeluaranController::class, 'update'])->name('pengeluaran.update');
 Route::delete('/pengeluaran/destroy/{id}', [PengeluaranController::class, 'destroy'])->name('pengeluaran.destroy');
+
+Route::get('/kas', [KasController::class, 'index'])->name('kas.index');
 
 
 // Route::post('/password/whatsapp', [PasswordResetLinkController::class, 'sendResetLinkViaWhatsApp'])->name('password.whatsapp');
