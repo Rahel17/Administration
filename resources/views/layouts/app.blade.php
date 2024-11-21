@@ -169,14 +169,14 @@
             </li>
 
             <li class="nav-item">
-            <a class="nav-link" href="{{ route('dashboard') }}" aria-expanded="false" aria-controls="ui-basic">
+            <a class="nav-link" href="{{ route('pemasukan.index') }}" aria-expanded="false" aria-controls="ui-basic">
                 <i class="icon-head menu-icon"></i>
                 <span class="menu-title">Pemasukan</span>
             </a>
             </li>
 
             <li class="nav-item">
-            <a class="nav-link" href="{{ route('dashboard') }}" aria-expanded="false" aria-controls="ui-basic">
+            <a class="nav-link" href="{{ route('pengeluaran.index') }}" aria-expanded="false" aria-controls="ui-basic">
                 <i class="icon-grid-2 menu-icon"></i>
                 <span class="menu-title">Pengeluaran</span>
             </a>

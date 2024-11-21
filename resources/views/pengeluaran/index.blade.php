@@ -20,7 +20,9 @@
                                         <th>Nominal</th>
                                         <th>Penanggungjawab</th>
                                         <th>Dokumen</th>
+                                        @if(!in_array(auth()->user()->role, ['anggota', 'bendum']))
                                         <th>Aksi</th>
+                                        @endif
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -34,8 +36,8 @@
                                         <td>Rp {{ number_format($dt->nominal, 0, ',', '.') }}</td>
                                         <td>{{ $dt->penganggungjawab }}</td>
                                         <td><a href="{{ asset('storage/' . $dt->dokumen) }}" target="_blank">{{ $dt->dokumen }}</a></td>
+                                        @if(!in_array(auth()->user()->role, ['anggota', 'bendum']))
                                         <td>
-                                          @if(auth()->user()->role !== 'anggota')
                                           <!-- Tombol Edit -->
                                           <button 
                                               class="btn btn-warning" 
@@ -58,9 +60,8 @@
                                                   Delete
                                               </button>
                                           </form>
-                                      @endif
-                                      
-                                        </td>
+                                         </td>
+                                        @endif
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -208,6 +209,8 @@
                   </div>
                   
                 @endforeach
+
+                {{-- Ajukan Pengeluaran (Bendahara Umum) --}}
 
 
                 {{-- datatables --}}

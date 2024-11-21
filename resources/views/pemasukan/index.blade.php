@@ -20,7 +20,7 @@
                                           <th>Nominal</th>
                                           <th>Penanggungjawab</th>
                                           <th>Dokumen</th>
-                                          @if(auth()->user()->role !== 'anggota')
+                                          @if(!in_array(auth()->user()->role, ['anggota', 'bendum']))
                                           <th>Aksi</th>
                                           @endif
                                       </tr>
@@ -36,8 +36,9 @@
                                           <td>Rp {{ number_format($dt->nominal, 0, ',', '.') }}</td>
                                           <td>{{ $dt->penganggungjawab }}</td>
                                           <td><a href="{{ asset('storage/' . $dt->dokumen) }}" target="_blank">{{ $dt->dokumen }}</a></td>
+                                          @if(!in_array(auth()->user()->role, ['anggota', 'bendum']))
                                           <td>
-                                            @if(auth()->user()->role !== 'anggota')
+                                           
                                             <!-- Tombol Edit -->
                                             <button 
                                                 class="btn btn-warning" 
@@ -59,10 +60,9 @@
                                                     onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
                                                     Delete
                                                 </button>
-                                            </form>
-                                        @endif
-                                        
+                                            </form>   
                                           </td>
+                                          @endif
                                       </tr>
                                       @endforeach
                                   </tbody>
@@ -215,6 +215,7 @@
                     
                   @endforeach
 
+                  {{-- Ajukan Pemasukan (Bendahara Umum) --}}
 
                   {{-- datatables --}}
                   <script>
