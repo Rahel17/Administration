@@ -50,6 +50,10 @@ Route::put('/pengeluaran/update/{id}', [PengeluaranController::class, 'update'])
 Route::delete('/pengeluaran/destroy/{id}', [PengeluaranController::class, 'destroy'])->name('pengeluaran.destroy');
 
 Route::get('/kas', [KasController::class, 'index'])->name('kas.index');
+Route::post('/kas/store', [KasController::class, 'store'])->name('kas.store');
+// Route::get('/kas/edit/{id}', [KasController::class, 'edit'])->name('kas.edit');
+// Route::put('/kas/update/{id}', [KasController::class, 'update'])->name('kas.update');
+// Route::delete('/kas/destroy/{id}', [KasController::class, 'destroy'])->name('kas.destroy');
 
 
 // Route::post('/password/whatsapp', [PasswordResetLinkController::class, 'sendResetLinkViaWhatsApp'])->name('password.whatsapp');

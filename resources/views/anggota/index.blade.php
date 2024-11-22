@@ -9,13 +9,7 @@
         <div class="mt-1 mr-3 ml-3 mb-3">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h3> Data Anggota </h3>
-                <button type="button"
-                    class="btn btn-primary" 
-                    style="width: 4.3cm; height: 1cm; border-radius: 3px;"
-                    data-toggle="modal"
-                    data-target="#modalTambah">
-                    <strong>Tambah Anggota</strong>
-                </button>
+                
                 <!-- Modal Tambah Data -->
                 <div class="modal fade" id="modalTambah" tabindex="-1" aria-labelledby="modalTambahLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg">
@@ -69,6 +63,13 @@
 
             </div>
             <table id="dataAnggota" class="ui celled table" style="width:100%">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    @if(auth()->user()->role !== 'anggota' && auth()->user()->role !== 'bendum')
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#modalTambah">
+                        <strong>Tambah Anggota</strong>
+                    </button>
+                    @endif
+                    </div>
                 <thead>
                     <tr>
                         <th>NPM</th>

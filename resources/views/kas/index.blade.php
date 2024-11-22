@@ -43,13 +43,13 @@
                                 <tbody>
                                     @foreach ($kas as $dt)
                                         @php
-                                            $monthly = json_decode($dt->bulan, true); // Gunakan $dt, bukan $kas
-                                            $total = array_sum($monthly);
+                                            $monthly = json_decode($dt->bulan, true) ?? [];
+                                            $total = is_array($monthly) ? array_sum($monthly) : 0;
                                             $isPaidOff = $total >= 50000;
                                         @endphp
                                         <tr>
-                                            <td>{{ $dt->user->name }}</td>
-                                            <td>{{ $dt->user->npm }}</td>
+                                            <td>{{ $dt->user?->name ?? 'Tidak Ada Data' }}</td>
+                                            <td>{{ $dt->user?->npm ?? 'Tidak Ada Data' }}</td>
                                             @foreach ($monthly as $month => $amount)
                                                 <td class="{{ $amount > 0 ? 'paid' : 'unpaid' }}">
                                                     Rp{{ number_format($amount, 0, ',', '.') }}
@@ -63,6 +63,7 @@
                                             </td>
                                         </tr>
                                     @endforeach
+
 
                                 </tbody>
                                 <div class="d-flex justify-content-between align-items-center mb-3">
@@ -84,48 +85,56 @@
               </div>
         </div>
 
-        {{-- Modal Tambah Pemasukan --}}
-        <div class="modal fade" id="modalTambahPemasukan" tabindex="-1" aria-labelledby="modalTambahPemasukanLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
+        {{-- Modal Tambah Data --}}
+        <div class="modal fade" id="modalTambahPemasukan" tabindex="-1" role="dialog" aria-labelledby="modalTambahPemasukanLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">Tambah Pemasukan</h4>
-                            <p class="card-description">
-                                Form untuk menambahkan pemasukan baru
-                            </p>
-                            <form class="forms-sample" method="POST" action="{{ route('kas.index') }}">
-                                @csrf
-                                {{-- <div class="form-group">
-                                    <label for="namaAnggota">Nama Anggota</label>
-                                    <select class="form-control" id="namaAnggota" name="user_id" required>
-                                        <option value="" disabled selected>Pilih Nama</option>
-                                        @foreach ($users as $user)
-                                            <option value="{{ $user->id }}">{{ $user->name }} ({{ $user->npm }})</option>
-                                        @endforeach
-                                    </select>
-                                </div> --}}
-                                <div class="form-group">
-                                    <label for="bulanPemasukan">Bulan</label>
-                                    @foreach (['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober'] as $month)
-                                        <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="bulan_{{ $month }}" name="bulan[{{ $month }}]" value="1">
-                                            <label class="form-check-label" for="bulan_{{ $month }}">{{ $month }}</label>
-                                        </div>
-                                    @endforeach
-                                </div>
-                                <div class="form-group">
-                                    <label for="jumlahPemasukan">Jumlah Pemasukan</label>
-                                    <input type="number" class="form-control" id="jumlahPemasukan" name="jumlah" placeholder="Masukkan jumlah dalam Rupiah" required>
-                                </div>
-                                <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                                <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
-                            </form>
+                    <form method="POST" action="{{ route('kas.store') }}" enctype="multipart/form-data">
+                        @csrf
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalTambahPemasukanLabel">Tambah Pemasukan</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
-                    </div>
+                        <div class="modal-body">
+                            <!-- Nama Anggota -->
+                            <div class="mb-3">
+                                <label for="namaAnggota" class="form-label">Nama Anggota</label>
+                                <select class="form-select" id="namaAnggota" name="user_id" required>
+                                    <option value="" disabled selected>Pilih Nama</option>
+                                    @foreach ($users as $user)
+                                        <option value="{{ $user->id }}">{{ $user->name }} ({{ $user->npm }})</option>
+                                    @endforeach
+                                </select>
+                            </div>
+        
+                            <!-- Bulan -->
+                            <div class="mb-3">
+                                <label for="bulanPemasukan" class="form-label">Bulan</label>
+                                @foreach (['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober'] as $month)
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="bulan_{{ $month }}" name="bulan[{{ $month }}]" value="1">
+                                        <label class="form-check-label" for="bulan_{{ $month }}">{{ $month }}</label>
+                                    </div>
+                                @endforeach
+                            </div>
+        
+                            <!-- Jumlah Pemasukan -->
+                            <div class="mb-3">
+                                <label for="jumlahPemasukan" class="form-label">Jumlah Pemasukan</label>
+                                <input type="number" class="form-control" id="jumlahPemasukan" name="jumlah" placeholder="Masukkan jumlah dalam Rupiah" required>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                        </div>
+                    </form>
                 </div>
             </div>
-        </div>       
+        </div>
+               
     @endif
 
     @if(!in_array(auth()->user()->role, ['admin']))

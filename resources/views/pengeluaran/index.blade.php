@@ -79,66 +79,85 @@
               </div>
         </div>
                 <!-- Modal Tambah pengeluaran -->
-                <div class="modal fade" id="modalTambahPengeluaran" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
+                <div class="modal fade" id="modalTambahPengeluaran" tabindex="-1" aria-labelledby="createPengeluaranModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <form action="{{ route('pengeluaran.store') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="createPengeluaranModalLabel">Tambah Pengeluaran Baru</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
                                 </div>
                                 <div class="modal-body">
-                                    <!-- Input Form -->
-                                    <div class="mb-3">
-                                        <label for="tanggal" class="form-label">Tanggal</label>
-                                        <input type="date" class="form-control" id="tanggal" name="tanggal" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="kategori" class="form-label">Kategori</label>
-                                        <select class="form-select" id="kategori" name="kategori" required>
-                                            <option value="" disabled selected>Pilih Kategori</option>
-                                            <option value="proker">Proker</option>
-                                            <option value="lainnya">Lainnya</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="uraian" class="form-label">Uraian</label>
-                                        <textarea class="form-control" id="uraian" name="uraian" rows="3" required></textarea>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="bidang" class="form-label">Bidang</label>
-                                        <select class="form-select" id="bidang" name="bidang" required>
-                                            <option value="" disabled selected>Pilih Bidang</option>
-                                            <option value="Inti">Inti</option>
-                                            <option value="PSDM">PSDM</option>
-                                            <option value="Humas">Kerohanian</option>
-                                            <option value="Kominfo">Kominfo</option>
-                                            <option value="Danus">Dana Usaha</option>
-                                            <option value="Minbak">Minat Bakat</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="nominal" class="form-label">Nominal</label>
-                                        <input type="number" class="form-control" id="nominal" name="nominal" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="penanggungjawab" class="form-label">Penanggungjawab</label>
-                                        <input type="text" class="form-control" id="penanggungjawab" name="penanggungjawab" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="dokumen" class="form-label">Dokumen Pendukung</label>
-                                        <input type="file" class="form-control" id="dokumen" name="dokumen">
+                                    <h3 class="text-center">Form Tambah Pengeluaran</h3>
+                                    <div class="container">
+                                        <div>
+                                            <div class="col font-weight-bold mt-3 mb-2">Tanggal</div>
+                                            <div class="col">
+                                                <input type="date" class="form-control" id="tanggal" name="tanggal" required>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="col font-weight-bold mt-3 mb-2">Kategori</div>
+                                            <div class="col">
+                                                <select class="form-control" id="kategori" name="kategori" required>
+                                                    <option value="" disabled selected>Pilih Kategori</option>
+                                                    <option value="proker">Proker</option>
+                                                    <option value="lainnya">Lainnya</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="col font-weight-bold mt-3 mb-2">Uraian</div>
+                                            <div class="col">
+                                                <textarea class="form-control" id="uraian" name="uraian" rows="3" required></textarea>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="col font-weight-bold mt-3 mb-2">Bidang</div>
+                                            <div class="col">
+                                                <select class="form-control" id="bidang" name="bidang" required>
+                                                    <option value="" disabled selected>Pilih Bidang</option>
+                                                    <option value="Inti">Inti</option>
+                                                    <option value="PSDM">PSDM</option>
+                                                    <option value="Humas">Kerohanian</option>
+                                                    <option value="Kominfo">Kominfo</option>
+                                                    <option value="Danus">Dana Usaha</option>
+                                                    <option value="Minbak">Minat Bakat</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="col font-weight-bold mt-3 mb-2">Nominal</div>
+                                            <div class="col">
+                                                <input type="number" class="form-control" id="nominal" name="nominal" required>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="col font-weight-bold mt-3 mb-2">Penanggungjawab</div>
+                                            <div class="col">
+                                                <input type="text" class="form-control" id="penanggungjawab" name="penanggungjawab" required>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="col font-weight-bold mt-3 mb-2">Dokumen Pendukung</div>
+                                            <div class="col">
+                                                <input type="file" class="form-control" id="dokumen" name="dokumen">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                                     <button type="submit" class="btn btn-primary">Simpan</button>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
+                
 
                 @foreach ($pengeluarans as $dt)
                     <!-- Modal Edit pengeluaran -->

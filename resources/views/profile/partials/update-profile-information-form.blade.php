@@ -52,9 +52,9 @@
             </div>
 
             <div>
-                <x-input-label for="email" :value="__('Email')" />
-                <x-text-input id="email" name="email" type="text" class="mt-1 block w-full" 
-                    :value="$anggota->email" readonly />
+                <x-input-label for="no_hp" :value="__('No HP')" />
+                <x-text-input id="no_hp" name="no_hp" type="text" class="mt-1 block w-full" 
+                    :value="$anggota->no_hp" readonly />
             </div>
         </div>
     @else
@@ -69,10 +69,10 @@
             </div>
 
             <div>
-                <x-input-label for="email" :value="__('Email')" />
-                <x-text-input id="email" name="email" type="text" aria-placeholder="raUc6@example.com" class="mt-1 block w-full" 
-                    :value="old('email')" required />
-                <x-input-error class="mt-2" :messages="$errors->get('email')" />
+                <x-input-label for="no_hp" :value="__('No HP')" />
+                <x-text-input id="no_hp" name="no_hp" type="text" aria-placeholder="+62xxxxxxxxxxx" class="mt-1 block w-full" 
+                    :value="old('no_hp')" required />
+                <x-input-error class="mt-2" :messages="$errors->get('no_hp')" />
             </div>
 
             <div class="flex items-center justify-end">
