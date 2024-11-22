@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('pemasukans', function (Blueprint $table) {
             $table->id();
             $table->date('tanggal');
-            $table->enum('kategori', ['proposal','sisa_proker', 'kas_wajib','lainnya']);
+            $table->enum('kategori', ['proposal','sisa_proker','kas_wajib','lainnya']);
             $table->text('uraian');
-            $table->enum('bidang', ['Inti','Pemberdayaan Sumber Daya Manusia', 'Kerohanian','Hubungan Masyarakat','Komunikasi dan Informasi','Dana Usaha','Minat Bakat']);
+            $table->enum('bidang', ['Inti','PSDM', 'Kerohanian','Humas','Kominfo','Danus','Minbak']);
             $table->decimal('nominal', 15, 2);
-            $table->string('penganggungjawab');
-            $table->string('dokumen');
+            $table->string('penanggungjawab');
+            $table->string('dokumen')->nullable();
             $table->timestamps();
         });
     }

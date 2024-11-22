@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('bidang');
-            $table->string('email');
+            $table->string('no_hp');
             $table->timestamps();
         });
     }

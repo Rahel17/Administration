@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('bidang');
             $table->json('bulan')->nullable(); // Menyimpan data iuran bulanan dalam format JSON
-            $table->enum('keterangan', ['lunas', 'belum_lunas'])->default('belum_lunas');
+            $table->enum('keterangan', ['lunas', 'belum_lunas']);
             $table->timestamps();
         });
         

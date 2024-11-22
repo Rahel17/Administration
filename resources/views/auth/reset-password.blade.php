@@ -12,6 +12,13 @@
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
+        <!-- NPM -->
+        <div>
+            <x-input-label for="npm" :value="__('npm')" />
+            <x-text-input id="npm" class="block mt-1 w-full" type="text" name="npm" :value="old('npm', $request->npm)" required autofocus autocomplete="username" />
+            <x-input-error :messages="$errors->get('npm')" class="mt-2" />
+        </div>
+
         <!-- Password -->
         <div class="mt-4">
             <x-input-label for="password" :value="__('Password')" />

@@ -34,7 +34,7 @@
                                           <td>{{ $dt->uraian }}</td>
                                           <td>{{ $dt->bidang }}</td>
                                           <td>Rp {{ number_format($dt->nominal, 0, ',', '.') }}</td>
-                                          <td>{{ $dt->penganggungjawab }}</td>
+                                          <td>{{ $dt->penanggungjawab }}</td>
                                           <td><a href="{{ asset('storage/' . $dt->dokumen) }}" target="_blank">{{ $dt->dokumen }}</a></td>
                                           @if(!in_array(auth()->user()->role, ['anggota', 'bendum']))
                                           <td>
@@ -114,11 +114,11 @@
                                         <select class="form-select" id="bidang" name="bidang" required>
                                             <option value="" disabled selected>Pilih Bidang</option>
                                             <option value="Inti">Inti</option>
-                                            <option value="Pemberdayaan Sumber Daya Manusia">PSDM</option>
-                                            <option value="Hubungan Masyarakat">Kerohanian</option>
-                                            <option value="Komunikasi dan Informasi">Kominfo</option>
-                                            <option value="Dana Usaha">Dana Usaha</option>
-                                            <option value="Minat Bakat">Minat Bakat</option>
+                                            <option value="PSDM">PSDM</option>
+                                            <option value="Humas">Kerohanian</option>
+                                            <option value="Kominfo">Kominfo</option>
+                                            <option value="Danus">Dana Usaha</option>
+                                            <option value="Minbak">Minat Bakat</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
@@ -126,8 +126,8 @@
                                         <input type="number" class="form-control" id="nominal" name="nominal" required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="penganggungjawab">Penanggungjawab</label>
-                                        <input type="text" class="form-control" id="penganggungjawab" name="penganggungjawab" required>
+                                        <label for="penanggungjawab">Penanggungjawab</label>
+                                        <input type="text" class="form-control" id="penanggungjawab" name="penanggungjawab" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="dokumen">Dokumen Pendukung</label>
@@ -178,11 +178,11 @@
                                           <label for="bidang{{ $dt->id }}" class="form-label">Bidang</label>
                                           <select class="form-select" id="bidang{{ $dt->id }}" name="bidang" required>
                                               <option value="Inti" {{ $dt->bidang === 'Inti' ? 'selected' : '' }}>Inti</option>
-                                              <option value="Pemberdayaan Sumber Daya Manusia" {{ $dt->bidang === 'Pemberdayaan Sumber Daya Manusia' ? 'selected' : '' }}>PSDM</option>
-                                              <option value="Hubungan Masyarakat" {{ $dt->bidang === 'Hubungan Masyarakat' ? 'selected' : '' }}>Kerohanian</option>
-                                              <option value="Komunikasi dan Informasi" {{ $dt->bidang === 'Komunikasi dan Informasi' ? 'selected' : '' }}>Kominfo</option>
-                                              <option value="Dana Usaha" {{ $dt->bidang === 'Dana Usaha' ? 'selected' : '' }}>Dana Usaha</option>
-                                              <option value="Minat Bakat" {{ $dt->bidang === 'Minat Bakat' ? 'selected' : '' }}>Minat Bakat</option>
+                                              <option value="PSDM" {{ $dt->bidang === 'PSDM' ? 'selected' : '' }}>PSDM</option>
+                                              <option value="Humas" {{ $dt->bidang === 'Humas' ? 'selected' : '' }}>Kerohanian</option>
+                                              <option value="Kominfo" {{ $dt->bidang === 'Kominfo' ? 'selected' : '' }}>Kominfo</option>
+                                              <option value="Danus" {{ $dt->bidang === 'Danus' ? 'selected' : '' }}>Dana Usaha</option>
+                                              <option value="Minbak" {{ $dt->bidang === 'Minbak' ? 'selected' : '' }}>Minat Bakat</option>
                                           </select>
                                       </div>
                                       <div class="mb-3">
@@ -190,8 +190,8 @@
                                           <input type="number" class="form-control" id="nominal{{ $dt->id }}" name="nominal" value="{{ $dt->nominal }}" required>
                                       </div>
                                       <div class="mb-3">
-                                          <label for="penganggungjawab{{ $dt->id }}" class="form-label">Penanggungjawab</label>
-                                          <input type="text" class="form-control" id="penganggungjawab{{ $dt->id }}" name="penganggungjawab" value="{{ $dt->penganggungjawab }}" required>
+                                          <label for="penanggungjawab{{ $dt->id }}" class="form-label">Penanggungjawab</label>
+                                          <input type="text" class="form-control" id="penanggungjawab{{ $dt->id }}" name="penanggungjawab" value="{{ $dt->penanggungjawab }}" required>
                                       </div>
                                       <div class="mb-3">
                                           <label for="dokumen{{ $dt->id }}" class="form-label">Dokumen Pendukung</label>

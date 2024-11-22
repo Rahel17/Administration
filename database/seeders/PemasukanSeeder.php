@@ -15,22 +15,20 @@ class PemasukanSeeder extends Seeder
     {
         Pemasukan::create([
             'tanggal' => '2024-01-15',
-            'kategori' => 'proposal',
-            'uraian' => 'Pemasukan 1',
+            'kategori' => 'lainnya',
+            'uraian' => 'Sisa uang kepengurusan Himatif 2023',
             'bidang' => 'Inti',
-            'nominal' => 10000,
-            'penganggungjawab' => 'John Doe',
-            'dokumen' => 'proposal.pdf',
+            'nominal' => 3803333,
+            'penganggungjawab' => 'Putri Kartika (Informatika 20)',
         ]);
 
         Pemasukan::create([
-            'tanggal' => '2024-02-20',
-            'kategori' => 'sisa_proker',
-            'uraian' => 'Pemasukan 2',
-            'bidang' => 'Pemberdayaan Sumber Daya Manusia',
-            'nominal' => 5000,
-            'penganggungjawab' => 'Jane Smith',
-            'dokumen' => 'sisa_proker.pdf',
+            'tanggal' => '2024-01-15',
+            'kategori' => 'lainnya',
+            'uraian' => 'Peminjaman lampu',
+            'bidang' => 'Inti',
+            'nominal' => 100000,
+            'penganggungjawab' => 'Resyaliana (Informatika 22)',
         ]);
     }
 }

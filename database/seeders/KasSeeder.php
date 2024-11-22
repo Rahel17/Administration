@@ -14,9 +14,8 @@ class KasSeeder extends Seeder
     public function run(): void
     {
         Kas::create([
-            'user_id' => 4,
-            // 'npm' => 'G1A022021',
-            'bidang' => 'Minat Bakat',
+            'user_id' => 1,
+            'bidang' => 'Inti',
             'bulan'=>json_encode([
                 'Januari'=>5000,
                 'Februari'=>5000,

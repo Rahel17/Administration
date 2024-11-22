@@ -63,14 +63,14 @@ class ProfileController extends Controller
     {
         $validated = $request->validate([
             'bidang' => 'required|string|max:255',
-            'email' => 'required|string|max:255',
+            'no_hp' => 'required|string|max:15',
         ]);
 
         Anggota::updateOrCreate(
             ['user_id' => auth::id()], // Cek berdasarkan user_id
             [
                 'bidang' => $validated['bidang'],
-                'email' => $validated['email'],
+                'no_hp' => $validated['no_hp'],
             ]
         );
 
