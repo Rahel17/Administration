@@ -19,7 +19,7 @@ class Pemasukan extends Model
         'uraian',
         'bidang',
         'nominal',
-        'penganggungjawab',
+        'penanggungjawab',
         'dokumen',
     ];
 

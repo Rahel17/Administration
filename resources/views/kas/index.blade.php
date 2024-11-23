@@ -27,6 +27,7 @@
                             <table id="dataPemasukan" class="table table-striped table-bordered" style="width: 100%; table-layout: auto;">
                                 <thead>
                                     <tr>
+                                        <th rowspan="2" style="vertical-align: middle; text-align: center;">No</th>
                                         <th rowspan="2" style="vertical-align: middle; text-align: center;">Nama</th>
                                         <th rowspan="2" style="vertical-align: middle; text-align: center;">NPM</th>
                                         <th colspan="10" style="text-align: center;">Bulan</th>
@@ -48,6 +49,7 @@
                                             $isPaidOff = $total >= 50000;
                                         @endphp
                                         <tr>
+                                            <td>{{ $loop->iteration }}</td>
                                             <td>{{ $dt->user?->name ?? 'Tidak Ada Data' }}</td>
                                             <td>{{ $dt->user?->npm ?? 'Tidak Ada Data' }}</td>
                                             @foreach ($monthly as $month => $amount)
@@ -192,4 +194,10 @@
       </div> 
     </div>           
     @endif
+
+    <script>
+        $(document).ready(function() {
+            $('#dataPemasukan').DataTable();
+        });
+    </script>
 </x-app-layout>

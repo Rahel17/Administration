@@ -115,17 +115,18 @@ class AnggotaController extends Controller
         return redirect()->back()->with('success', 'Data berhasil diupdate');
     }
 
+
     /**
      * Remove the specified resource from storage.
      */
     public function destroy($id)
-{
-    // Hapus data dari tabel 'anggotas'
-    DB::table('anggotas')->where('user_id', $id)->delete();
+    {
+        // Hapus data dari tabel 'anggotas'
+        DB::table('anggotas')->where('user_id', $id)->delete();
 
-    // Jika Anda juga ingin menghapus data pengguna di tabel 'users', tambahkan ini:
-    DB::table('users')->where('id', $id)->delete();
+        // Jika Anda juga ingin menghapus data pengguna di tabel 'users', tambahkan ini:
+        DB::table('users')->where('id', $id)->delete();
 
-    return redirect()->back()->with('success', 'Data berhasil dihapus');
-}
+        return redirect()->back()->with('success', 'Data berhasil dihapus');
+    }
 }
