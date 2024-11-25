@@ -19,7 +19,7 @@ class Pengeluaran extends Model
         'uraian',
         'bidang',
         'nominal',
-        'penganggungjawab',
+        'penanggungjawab',
         'dokumen',
     ];
 

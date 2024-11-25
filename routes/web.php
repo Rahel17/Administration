@@ -16,6 +16,10 @@ Route::get('/', function(){
 	return view('landingpage');
 });
 
+Route::get('/dashboardUser', function(){
+	return view('dashboardUser')->name('dashboardUser');
+});
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -42,6 +46,9 @@ Route::post('/pemasukan/store', [PemasukanController::class, 'store'])->name('pe
 Route::get('/pemasukan/edit/{id}', [PemasukanController::class, 'edit'])->name('pemasukan.edit');
 Route::put('/pemasukan/update/{id}', [PemasukanController::class, 'update'])->name('pemasukan.update');
 Route::delete('/pemasukan/destroy/{id}', [PemasukanController::class, 'destroy'])->name('pemasukan.destroy');
+Route::patch('/pemasukan/approve/{id}', [PemasukanController::class, 'approve'])->name('pemasukan.approve');
+Route::patch('/pemasukan/reject/{id}', [PemasukanController::class, 'reject'])->name('pemasukan.reject');
+
 
 Route::get('/pengeluaran', [PengeluaranController::class, 'index'])->name('pengeluaran.index');
 Route::post('/pengeluaran/store', [PengeluaranController::class, 'store'])->name('pengeluaran.store');
@@ -51,6 +58,7 @@ Route::delete('/pengeluaran/destroy/{id}', [PengeluaranController::class, 'destr
 
 Route::get('/kas', [KasController::class, 'index'])->name('kas.index');
 Route::post('/kas/store', [KasController::class, 'store'])->name('kas.store');
+Route::post('/kas/upload', [KasController::class, 'upload'])->name('kas.upload');
 // Route::get('/kas/edit/{id}', [KasController::class, 'edit'])->name('kas.edit');
 // Route::put('/kas/update/{id}', [KasController::class, 'update'])->name('kas.update');
 // Route::delete('/kas/destroy/{id}', [KasController::class, 'destroy'])->name('kas.destroy');

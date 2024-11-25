@@ -6,6 +6,7 @@ use App\Models\Pemasukan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
+
 class PemasukanController extends Controller
 {
     /**
@@ -13,14 +14,21 @@ class PemasukanController extends Controller
      */
 
 
-    public function index()
-    {
-        // Ambil semua data pemasukan dari database
-        $pemasukans = Pemasukan::orderBy('tanggal', 'desc')->get();
-
-        // Return data ke view dengan nama variabel `pemasukans`
-        return view('pemasukan.index', compact('pemasukans'));
-    }
+     public function index(Request $request)
+     {
+         $user = $request->user();
+     
+         if ($user->role === 'bendum') {
+             $pemasukans = Pemasukan::where('penanggungjawab', $user->name)
+                 ->whereIn('status_verifikasi', ['pending', 'approved'])
+                 ->get();
+         } else {
+             $pemasukans = Pemasukan::all();
+         }
+     
+         return view('pemasukan.index', compact('pemasukans'));
+     }
+     
 
 
     /**
@@ -36,29 +44,42 @@ class PemasukanController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $validatedData = $request->validate([
             'tanggal' => 'required|date',
-            'kategori' => 'required|string|max:255',
+            'kategori' => 'required|string',
             'uraian' => 'required|string',
             'bidang' => 'required|string',
             'nominal' => 'required|numeric',
-            'penganggungjawab' => 'required|string',
-            'dokumen' => 'nullable|file|mimes:pdf,jpg,png',
+            'penanggungjawab' => 'required|string',
+            'dokumen' => 'nullable|file|mimes:pdf|max:2048',
         ]);
-    
+
         if ($request->hasFile('dokumen')) {
-            $path = $request->file('dokumen')->store('dokumen', 'public');
-            if (!$path) {
-                return redirect()->back()->withErrors(['dokumen' => 'Gagal menyimpan file dokumen.']);
-            }
-            $validated['dokumen'] = $path;
+            $validatedData['dokumen'] = $request->file('dokumen')->store('dokumen_pemasukan', 'public');
         }
-    
-        Pemasukan::create($validated);
-    
-        return redirect()->route('pemasukan.index')->with('success', 'Pemasukan berhasil ditambahkan.');
+
+        $validatedData['status_verifikasi'] = 'pending'; // Set status pending
+        Pemasukan::create($validatedData);
+
+        return redirect()->back()->with('success', 'Pemasukan berhasil diajukan dan menunggu persetujuan.');
     }
-    
+
+    public function approve($id)
+    {
+        $pemasukan = Pemasukan::findOrFail($id);
+        $pemasukan->update(['status_verifikasi' => 'approved']);
+
+        return redirect()->back()->with('success', 'Pemasukan berhasil disetujui.');
+    }
+
+    public function reject($id)
+    {
+        $pemasukan = Pemasukan::findOrFail($id);
+        $pemasukan->update(['status_verifikasi' => 'rejected']);
+
+        return redirect()->back()->with('success', 'Pemasukan berhasil ditolak.');
+    }
+
 
     /**
      * Display the specified resource.
@@ -89,7 +110,7 @@ class PemasukanController extends Controller
         'uraian' => 'required|string',
         'bidang' => 'required|string',
         'nominal' => 'required|numeric',
-        'penganggungjawab' => 'required|string',
+        'penanggungjawab' => 'required|string',
         'dokumen' => 'nullable|file|mimes:pdf,jpg,png',
     ]);
 

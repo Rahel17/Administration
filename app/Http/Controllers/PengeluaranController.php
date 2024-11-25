@@ -38,7 +38,7 @@ class PengeluaranController extends Controller
             'uraian' => 'required|string',
             'bidang' => 'required|string',
             'nominal' => 'required|numeric',
-            'penganggungjawab' => 'required|string',
+            'penanggungjawab' => 'required|string',
             'dokumen' => 'nullable|file|mimes:pdf,jpg,png',
         ]);
     
@@ -84,7 +84,7 @@ class PengeluaranController extends Controller
             'uraian' => 'required|string',
             'bidang' => 'required|string',
             'nominal' => 'required|numeric',
-            'penganggungjawab' => 'required|string',
+            'penanggungjawab' => 'required|string',
             'dokumen' => 'nullable|file|mimes:pdf,jpg,png',
         ]);
     

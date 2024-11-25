@@ -13,18 +13,15 @@ return new class extends Migration
     {
         Schema::create('kas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('bidang');
-            $table->json('bulan')->nullable(); // Menyimpan data iuran bulanan dalam format JSON
-            $table->enum('keterangan', ['lunas', 'belum_lunas']);
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->string('bulan'); // Nama bulan pembayaran
+            $table->string('bukti'); // Path bukti pembayaran (nullable jika belum mengajukan)
+            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending'); // Status pengajuan
+            $table->decimal('nominal', 10, 2); // Jumlah uang kas
             $table->timestamps();
         });
-        
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('kas');

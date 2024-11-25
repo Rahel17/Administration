@@ -100,7 +100,8 @@
                             <form action="{{ route('anggota.destroy', $anggota->id) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit"
+                                <button 
+                                    type="submit"
                                     class="btn btn-danger justify-content-center align-items-center" 
                                     style="width: 35px; height: 35px; border-radius: 10px;" 
                                     onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">

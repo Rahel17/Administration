@@ -20,6 +20,7 @@ return new class extends Migration
             $table->decimal('nominal', 15, 2);
             $table->string('penanggungjawab');
             $table->string('dokumen')->nullable();
+            $table->enum('status_verifikasi', ['pending', 'approved', 'rejected'])->default('pending');
             $table->timestamps();
         });
     }

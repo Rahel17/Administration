@@ -18,4 +18,8 @@ class Anggota extends Model
     public function user()  {
         return $this->belongsTo(User::class);
     }
+
+    public function kas()  {
+        return $this->hasOne(Kas::class);
+    }
 }

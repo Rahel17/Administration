@@ -1,19 +1,4 @@
 <x-app-layout>
-    <style>
-        /* Table container for responsive scrolling */
-        .table-container {
-            overflow-x: auto;
-            width: 100%;
-            margin: 20px 0;
-        }
-    
-        .table th, .table td {
-            padding: 10px;
-            border: 1px solid #ddd;
-            text-align: center;
-        }
-    </style>
-
     @if(!in_array(auth()->user()->role, ['anggota', 'bendum']))
     <div class="content-wrapper">
         <div class="card">
@@ -30,7 +15,9 @@
                                         <th rowspan="2" style="vertical-align: middle; text-align: center;">No</th>
                                         <th rowspan="2" style="vertical-align: middle; text-align: center;">Nama</th>
                                         <th rowspan="2" style="vertical-align: middle; text-align: center;">NPM</th>
+                                        <th rowspan="2" style="vertical-align: middle; text-align: center;">Bidang</th>
                                         <th colspan="10" style="text-align: center;">Bulan</th>
+                                        <th rowspan="2" style="vertical-align: middle; text-align: center;">Bukti Pembayaran</th>
                                         <th rowspan="2" style="vertical-align: middle; text-align: center;">Total</th>
                                         <th rowspan="2" style="vertical-align: middle; text-align: center;">Keterangan</th>
                                         <th rowspan="2" style="vertical-align: middle; text-align: center;">Aksi</th>  
@@ -41,50 +28,51 @@
                                         @endforeach
                                     </tr>
                                 </thead>
+                                
                                 <tbody>
-                                    @foreach ($kas as $dt)
-                                        @php
-                                            $monthly = json_decode($dt->bulan, true) ?? [];
-                                            $total = is_array($monthly) ? array_sum($monthly) : 0;
-                                            $isPaidOff = $total >= 50000;
-                                        @endphp
+                                    @foreach ($kas as $index => $data)
                                         <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $dt->user?->name ?? 'Tidak Ada Data' }}</td>
-                                            <td>{{ $dt->user?->npm ?? 'Tidak Ada Data' }}</td>
-                                            @foreach ($monthly as $month => $amount)
-                                                <td class="{{ $amount > 0 ? 'paid' : 'unpaid' }}">
-                                                    Rp{{ number_format($amount, 0, ',', '.') }}
+                                            <td>{{ $index + 1 }}</td>
+                                            <td>{{ $data['user']->name }}</td>
+                                            <td>{{ $data['user']->npm }}</td>
+                                            <td>{{ $data['user']->anggota->bidang ?? 'Tidak Diketahui' }}</td>
+
+                                            @foreach (['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober'] as $month)
+                                                <td>
+                                                    @php
+                                                        // Cek apakah bulan ini ada pada data kas anggota
+                                                        $kasBulan = $data['kas']->firstWhere('bulan', $month);
+                                                        
+                                                    @endphp
+                                                    
+                                                    @if ($kasBulan)
+                                                    {{-- {{  $kasBulan->bulan}} --}}
+                                                    @php
+echo 'Rp5.000'.'[<a href="' . asset('' . $kasBulan->bukti) . '">BUkti</a>]';
+                                                    @endphp
+                                                        {{-- Jika ada data untuk bulan tersebut --}}
+                                                        {{-- Rp{{ number_format(array_sum(json_decode($kasBulan->bulan, true)), 0, ',', '.') }} --}}
+                                                    @else
+                                                        {{-- Jika tidak ada data untuk bulan tersebut --}}
+                                                        -
+                                                    @endif
                                                 </td>
                                             @endforeach
-                                            <td>Rp{{ number_format($total, 0, ',', '.') }}</td>
-                                            <td>{{ $isPaidOff ? 'lunas' : 'belum lunas' }}</td>
+
+                                            <td>{{ $data['total'] > 0 ? 'Ada Pembayaran' : '-' }}</td>
+                                            <td>{{ $data['total'] > 0 ? 'Lunas' : 'Belum Lunas' }}</td>
                                             <td>
-                                                <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modalEdit{{ $dt->id }}">Edit</button>
-                                                <button class="btn btn-danger btn-sm" onclick="confirmDelete({{ $dt->id }})">Delete</button>
+                                                <!-- Aksi untuk mengedit atau melihat -->
+                                                <button class="btn btn-info btn-sm">Edit</button>
                                             </td>
                                         </tr>
                                     @endforeach
-
-
                                 </tbody>
-                                <div class="d-flex justify-content-between align-items-center mb-3">
-                                    @if(!in_array(auth()->user()->role, ['anggota', 'bendum']))
-                                        <button class="btn btn-primary" data-toggle="modal" data-target="#modalTambahPemasukan">
-                                            <strong>Tambah Pemasukan</strong>
-                                        </button>
-                                    @endif
-                                </div>
-                                <div style="overflow-x: auto; width: 100%;">
-                                    <table id="dataPemasukan" class="table table-striped table-bordered" style="width: 100%; table-layout: auto;">
-                                        <!-- Tabel -->
-                                    </table>
-                                </div>                                
                             </table>
                         </div>   
-                      </div>
                     </div>
-              </div>
+                </div>
+            </div>
         </div>
 
         {{-- Modal Tambah Data --}}
@@ -136,68 +124,64 @@
                 </div>
             </div>
         </div>
-               
+    </div>
+
+
     @endif
 
     @if(!in_array(auth()->user()->role, ['admin']))
-    <div class="content-wrapper">
-    <div class="col-12 grid-margin stretch-card">
-        <div class="card">
-          <div class="card-body">
-            <h4 class="card-title">Segera Bayar Uang Kas Bulanan Agar Tidak Melulu Ditagih</h4>
-            <p class="card-description">
-              Bayar Sekarang 
-            </p>
-            <form class="forms-sample">
-              <div class="form-group">
-                <label for="exampleInputName1">Name</label>
-                <input type="text" class="form-control" id="exampleInputName1" placeholder="Name">
-              </div>
-              <div class="form-group">
-                <label for="exampleInputEmail3">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Email">
-              </div>
-              <div class="form-group">
-                <label for="exampleInputPassword4">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword4" placeholder="Password">
-              </div>
-              <div class="form-group">
-                <label for="exampleSelectGender">Gender</label>
-                  <select class="form-control" id="exampleSelectGender">
-                    <option>Male</option>
-                    <option>Female</option>
-                  </select>
-                </div>
-              <div class="form-group">
-                <label>File upload</label>
-                <input type="file" name="img[]" class="file-upload-default">
-                <div class="input-group col-xs-12">
-                  <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
-                  <span class="input-group-append">
-                    <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
-                  </span>
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="exampleInputCity1">City</label>
-                <input type="text" class="form-control" id="exampleInputCity1" placeholder="Location">
-              </div>
-              <div class="form-group">
-                <label for="exampleTextarea1">Textarea</label>
-                <textarea class="form-control" id="exampleTextarea1" rows="4"></textarea>
-              </div>
-              <button type="submit" class="btn btn-primary mr-2">Submit</button>
-              <button class="btn btn-light">Cancel</button>
-            </form>
-          </div>
+        <div class="content-wrapper">
+            <div class="row">
+                <div class="col-12">
+                    <h3>Uang Kas</h3>
+                    <h6>Pilih Bulan Pembayaran</h6>
+                    <div class="row">
+                        @foreach (['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober'] as $month)
+    <div class="col-md-3 mb-4">
+        <div class="card shadow-sm">
+            <div class="card-body text-center">
+                <h5>{{ $month }}</h5>
+                <p>2024</p>
+                <p>Rp. 5,000 / bulan</p>
+                @if (in_array($month, $databulan))
+                    <button class="btn btn-success btn-sm" disabled>
+                        <i class="fas fa-check"></i> Sudah Bayar
+                    </button>
+                @endif
+                @if (!in_array($month, $databulan))
+                    <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#uploadModal{{ $month }}">
+                        <i class="fas fa-upload"></i> Bayar
+                    </button>
+                @endif
+            </div>
         </div>
-      </div> 
-    </div>           
-    @endif
+    </div>
 
-    <script>
-        $(document).ready(function() {
-            $('#dataPemasukan').DataTable();
-        });
-    </script>
+                        <!-- Modal Upload Bukti Pembayaran -->
+                        <div class="modal fade" id="uploadModal{{ $month }}" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel{{ $month }}" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <form method="POST" action="{{ route('kas.store') }}" enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <label for="buktiPembayaran">Unggah Bukti Pembayaran</label>
+                                                <input type="file" class="form-control" id="buktiPembayaran" name="bukti" required>
+                                            </div>
+                                            <input type="hidden" name="bulan" value="{{ $month }}">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                                            <button type="submit" class="btn btn-primary">Kirim</button>
+                                        </div>
+                                    </form>                                    
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif 
 </x-app-layout>

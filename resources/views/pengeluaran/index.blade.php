@@ -35,7 +35,15 @@
                                         <td>{{ $dt->bidang }}</td>
                                         <td>Rp {{ number_format($dt->nominal, 0, ',', '.') }}</td>
                                         <td>{{ $dt->penanggungjawab }}</td>
-                                        <td><a href="{{ asset('storage/' . $dt->dokumen) }}" target="_blank">{{ $dt->dokumen }}</a></td>
+                                        <td>
+                                            @if ($dt->dokumen)
+                                                <a href="{{ asset('storage/' . $dt->dokumen) }}" target="_blank" class="btn btn-info btn-sm" style="padding: 10px 10px; font-size: 10px;">
+                                                    <i class="fa-regular fa-file-pdf"></i> Lihat Dokumen
+                                                </a>
+                                            @else
+                                                <span class="text-muted">Tidak Ada File</span>
+                                            @endif
+                                        </td>
                                         @if(!in_array(auth()->user()->role, ['anggota', 'bendum']))
                                         <td>
                                           <!-- Tombol Edit -->

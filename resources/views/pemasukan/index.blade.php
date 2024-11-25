@@ -9,6 +9,13 @@
                       <div class="col-12">
                           <!-- Kontainer untuk scroll horizontal -->
                           <div style="overflow-x: auto; width: 100%; ">
+                            @if(session('success'))
+                                <div class="alert alert-success">
+                                    {{ session('success') }}
+                                </div>
+                            @endif
+
+                            @if(auth()->user()->role !== 'anggota' && auth()->user()->role !== 'bendum')
                               <table id="dataPemasukan" class="table table-striped table-bordered" style="width: 100%; table-layout: auto;">
                                   <thead>
                                       <tr>
@@ -19,8 +26,9 @@
                                           <th>Bidang</th>
                                           <th>Nominal</th>
                                           <th>Penanggungjawab</th>
-                                          <th>Dokumen</th>
+                                          <th>Dokumen/SPJ</th>
                                           @if(!in_array(auth()->user()->role, ['anggota', 'bendum']))
+                                          <th>Status</th>
                                           <th>Aksi</th>
                                           @endif
                                       </tr>
@@ -35,7 +43,35 @@
                                           <td>{{ $dt->bidang }}</td>
                                           <td>Rp {{ number_format($dt->nominal, 0, ',', '.') }}</td>
                                           <td>{{ $dt->penanggungjawab }}</td>
-                                          <td><a href="{{ asset('storage/' . $dt->dokumen) }}" target="_blank">{{ $dt->dokumen }}</a></td>
+                                          <td>
+                                            @if ($dt->dokumen)
+                                                <a href="{{ asset('storage/' . $dt->dokumen) }}" target="_blank" class="btn btn-info btn-sm" style="padding: 10px 10px; font-size: 10px;">
+                                                    <i class="fa-regular fa-file-pdf"></i> Lihat Dokumen/SPJ
+                                                </a>
+                                            @else
+                                                <span class="text-muted">Tidak Ada File</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if($dt->status_verifikasi === 'pending')
+                                                <span class="badge bg-warning">Pending</span>
+                                                <form action="{{ route('pemasukan.approve', $dt->id) }}" method="POST" style="display:inline-block;">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                    <button class="btn btn-success btn-sm" type="submit">Setujui</button>
+                                                </form>
+                                                <form action="{{ route('pemasukan.reject', $dt->id) }}" method="POST" style="display:inline-block;">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                    <button class="btn btn-danger btn-sm" type="submit">Tolak</button>
+                                                </form>
+                                            @elseif($dt->status_verifikasi === 'approved')
+                                                <span class="badge bg-success">Disetujui</span>
+                                            @else
+                                                <span class="badge bg-danger">Ditolak</span>
+                                            @endif
+                                        </td>
+                                        
                                           @if(!in_array(auth()->user()->role, ['anggota', 'bendum']))
                                           <td>
                                            
@@ -72,9 +108,17 @@
                                       <strong>Tambah Pemasukan</strong>
                                   </button>
                                   @endif
-                                  </div>
                               </table>
-                          </div>   
+                            @endif
+                              
+                                @if(auth()->user()->role !== 'anggota' && auth()->user()->role !== 'admin')
+                                    <button class="btn btn-primary" data-toggle="modal" data-target="#modalTambahPemasukan">
+                                        <strong>Ajukan Pemasukan</strong>
+                                    </button>
+                                @endif
+
+                                  </div>
+                            </div>   
                         </div>
                       </div>
                 </div>

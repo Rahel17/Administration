@@ -45,7 +45,7 @@
           <li><a href="{{ url('/') }}" class="active">Home</a></li>
           <li><a href="{{ url('login') }}" >Login</a></li>
           <li><a href="{{ url('register') }}" >Register</a></li>
-          <li><a href="#about">Laporan</a></li>
+          <li><a href="{{ url('dashboardUser') }}" >Dashboard</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
