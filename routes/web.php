@@ -42,23 +42,31 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::get('/pemasukan', [PemasukanController::class, 'index'])->name('pemasukan.index');
+Route::get('/pemasukan/riwayat', [PemasukanController::class, 'indexRiwayat'])->name('pemasukan.riwayat');
+Route::put('/pemasukan/{id}/ajukan-kembali', [PemasukanController::class, 'ajukanKembali'])->name('pemasukan.ajukanKembali');
 Route::post('/pemasukan/store', [PemasukanController::class, 'store'])->name('pemasukan.store');
 Route::get('/pemasukan/edit/{id}', [PemasukanController::class, 'edit'])->name('pemasukan.edit');
 Route::put('/pemasukan/update/{id}', [PemasukanController::class, 'update'])->name('pemasukan.update');
 Route::delete('/pemasukan/destroy/{id}', [PemasukanController::class, 'destroy'])->name('pemasukan.destroy');
-Route::patch('/pemasukan/approve/{id}', [PemasukanController::class, 'approve'])->name('pemasukan.approve');
-Route::patch('/pemasukan/reject/{id}', [PemasukanController::class, 'reject'])->name('pemasukan.reject');
-
+Route::post('/pemasukan/approve/{id}', [PemasukanController::class, 'approve'])->name('pemasukan.approve');
+Route::post('/pemasukan/reject/{id}', [PemasukanController::class, 'reject'])->name('pemasukan.reject');
+Route::post('/pemasukan/update-status/{id}', [PemasukanController::class, 'updateStatus']);
 
 Route::get('/pengeluaran', [PengeluaranController::class, 'index'])->name('pengeluaran.index');
+Route::get('/pengeluaran/riwayat', [PengeluaranController::class, 'indexRiwayat'])->name('pengeluaran.riwayat');
+Route::put('/pengeluaran/{id}/ajukan-kembali', [PengeluaranController::class, 'ajukanKembali'])->name('pengeluaran.ajukanKembali');
 Route::post('/pengeluaran/store', [PengeluaranController::class, 'store'])->name('pengeluaran.store');
 Route::get('/pengeluaran/edit/{id}', [PengeluaranController::class, 'edit'])->name('pengeluaran.edit');
 Route::put('/pengeluaran/update/{id}', [PengeluaranController::class, 'update'])->name('pengeluaran.update');
 Route::delete('/pengeluaran/destroy/{id}', [PengeluaranController::class, 'destroy'])->name('pengeluaran.destroy');
+Route::post('/pengeluaran/approve/{id}', [PengeluaranController::class, 'approve'])->name('pengeluaran.approve');
+Route::post('/pengeluaran/reject/{id}', [PengeluaranController::class, 'reject'])->name('pengeluaran.reject');
+Route::post('/pengeluaran/update-status/{id}', [PengeluaranController::class, 'updateStatus']);
 
 Route::get('/kas', [KasController::class, 'index'])->name('kas.index');
-Route::post('/kas/store', [KasController::class, 'store'])->name('kas.store');
-Route::post('/kas/upload', [KasController::class, 'upload'])->name('kas.upload');
+Route::get('/kas/riwayat', [KasController::class, 'indexRiwayat'])->name('kas.riwayat');
+Route::post('/kas', [KasController::class, 'store'])->name('kas.store');
+Route::put('/kas/{id}', [KasController::class, 'update'])->name('kas.update');
 // Route::get('/kas/edit/{id}', [KasController::class, 'edit'])->name('kas.edit');
 // Route::put('/kas/update/{id}', [KasController::class, 'update'])->name('kas.update');
 // Route::delete('/kas/destroy/{id}', [KasController::class, 'destroy'])->name('kas.destroy');

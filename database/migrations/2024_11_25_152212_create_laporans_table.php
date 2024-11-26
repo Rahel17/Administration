@@ -11,15 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pengeluarans', function (Blueprint $table) {
+        Schema::create('laporans', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('pemasukan_id')->constrained()->onDelete('cascade');
+            $table->foreignId('pengeluaran_id')->constrained()->onDelete('cascade');
+            $table->foreignId('kas_id')->constrained()->onDelete('cascade');
             $table->date('tanggal');
-            $table->enum('kategori', ['proker','lainnya']);
-            $table->text('uraian');
-            $table->enum('bidang', ['Inti','PSDM', 'Kerohanian','Humas','Kominfo','Danus','Minbak']);
-            $table->decimal('nominal', 15, 2);
-            $table->string('penanggungjawab');
-            $table->string('dokumen')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pengeluarans');
+        Schema::dropIfExists('laporans');
     }
 };

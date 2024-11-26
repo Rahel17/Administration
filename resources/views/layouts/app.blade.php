@@ -118,39 +118,38 @@
 
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('anggota.index') }}" aria-expanded="false" aria-controls="ui-basic">
-                    <i class="icon-head menu-icon"></i>
+                    <i class="icon-head menu-icon"></i></i>
                     <span class="menu-title">Anggota</span>
                 </a>
             </li>
 
             <li class="nav-item">
-            <a class="nav-link" href="{{ route('pemasukan.index') }}" aria-expanded="false" aria-controls="ui-basic">
-                <i class="icon-grid-2 menu-icon"></i>
+              <a class="nav-link" href="{{ route('pemasukan.index') }}" aria-expanded="false" aria-controls="ui-basic">
+                <i class="icon-columns menu-icon"></i>
                 <span class="menu-title">Pemasukan</span>
-            </a>
+              </a>
             </li>
 
             <li class="nav-item">
-            <a class="nav-link" href="{{ route('pengeluaran.index') }}" aria-expanded="false" aria-controls="ui-basic">
-                <i class="icon-grid-2 menu-icon"></i>
+              <a class="nav-link" href="{{ route('pengeluaran.index') }}" aria-expanded="false" aria-controls="ui-basic">
+                <i class="icon-columns menu-icon"></i>
                 <span class="menu-title">Pengeluaran</span>
-            </a>
+              </a>
             </li>
 
             <li class="nav-item">
-            <a class="nav-link" href="{{ route('kas.index') }}" aria-expanded="false" aria-controls="ui-basic">
-                <i class="icon-layout menu-icon"></i>
-                <span class="menu-title">Kas Anggota</span>
-            </a>
-            </li>
-
-
-            {{-- <li class="nav-item">
-                <a class="nav-link" href="{{ route('dashboard') }}" aria-expanded="false" aria-controls="ui-basic">
-                    <i class="icon-paper menu-icon"></i>
-                    <span class="menu-title">Saldo</span>
+                <a class="nav-link" data-toggle="collapse" href="#kas" aria-expanded="false" aria-controls="kas">
+                  <i class="icon-book menu-icon"></i>
+                  <span class="menu-title">Kas Anggota </span>
+                  <i class="menu-arrow"></i>
                 </a>
-            </li> --}}
+                <div class="collapse" id="kas">
+                  <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"><a class="nav-link" href="{{ route('kas.index') }}">Pembayaran Kas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('kas.riwayat') }}">Riwayat Kas</a></li>
+                  </ul>
+                </div>
+              </li>
 
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('dashboard') }}" aria-expanded="false" aria-controls="ui-basic">
@@ -170,32 +169,48 @@
             </li>
 
             <li class="nav-item">
-            <a class="nav-link" href="{{ route('pemasukan.index') }}" aria-expanded="false" aria-controls="ui-basic">
-                <i class="icon-head menu-icon"></i>
-                <span class="menu-title">Pemasukan</span>
-            </a>
-            </li>
-
-            <li class="nav-item">
-            <a class="nav-link" href="{{ route('pengeluaran.index') }}" aria-expanded="false" aria-controls="ui-basic">
-                <i class="icon-grid-2 menu-icon"></i>
-                <span class="menu-title">Pengeluaran</span>
-            </a>
-            </li>
-
-            <li class="nav-item">
-            <a class="nav-link" href="{{ route('kas.index') }}" aria-expanded="false" aria-controls="ui-basic">
-                <i class="icon-layout menu-icon"></i>
-                <span class="menu-title">Kas Anggota</span>
-            </a>
-            </li>
-
-            {{-- <li class="nav-item">
-                <a class="nav-link" href="{{ route('dashboard') }}" aria-expanded="false" aria-controls="ui-basic">
-                    <i class="icon-paper menu-icon"></i>
-                    <span class="menu-title">Saldo</span>
+                <a class="nav-link" data-toggle="collapse" href="#pemasukan" aria-expanded="false" aria-controls="pemasukan">
+                  <i class="icon-columns menu-icon"></i>
+                  <span class="menu-title">Pemasukan</span>
+                  <i class="menu-arrow"></i>
                 </a>
-            </li> --}}
+                <div class="collapse" id="pemasukan">
+                  <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"><a class="nav-link" href="{{ route('pemasukan.index') }}">Catatan Pemasukan</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('pemasukan.riwayat') }}">Riwayat Pemasukan</a></li>
+                  </ul>
+                </div>
+              </li>
+
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#pengeluaran" aria-expanded="false" aria-controls="pengeluaran">
+                  <i class="icon-columns menu-icon"></i>
+                  <span class="menu-title">Pengeluaran</span>
+                  <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="pengeluaran">
+                  <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"><a class="nav-link" href="{{ route('pengeluaran.index') }}">Catatan Pengeluaran</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('pengeluaran.riwayat') }}">Riwayat Pengeluaran</a></li>
+                  </ul>
+                </div>
+              </li>
+
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#kas" aria-expanded="false" aria-controls="kas">
+                  <i class="icon-book menu-icon"></i>
+                  <span class="menu-title">Kas Anggota </span>
+                  <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="kas">
+                  <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"><a class="nav-link" href="{{ route('kas.index') }}">Pembayaran Kas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('kas.riwayat') }}">Riwayat Kas</a></li>
+                  </ul>
+                </div>
+              </li>
+
+            </li>
 
             @endif
 
@@ -208,11 +223,19 @@
             </li>
 
             <li class="nav-item">
-            <a class="nav-link" href="{{ route('kas.index') }}">
-                <i class="icon-layout menu-icon"></i>
-                <span class="menu-title">Kas Anggota</span>
-            </a>
+                <a class="nav-link" data-toggle="collapse" href="#kas" aria-expanded="false" aria-controls="kas">
+                    <i class="fa-solid fa-book menu-icon"></i>
+                  <span class="menu-title">Kas Anggota </span>
+                  <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="kas">
+                  <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"><a class="nav-link" href="{{ route('kas.index') }}">Pembayaran Kas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('kas.riwayat') }}">Riwayat Kas</a></li>
+                  </ul>
+                </div>
             </li>
+            
             @endif
 
             <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">

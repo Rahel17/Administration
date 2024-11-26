@@ -67,102 +67,102 @@ class UserSeeder extends Seeder
 
             //anggota (PSDM)
             //7
-            // [
-            //     'name' => 'Ferdy Fitriansyah Rowi',
-            //     'npm' => 'G1A022082',
-            //     'password' => '12345678',
-            // ],
+            [
+                'name' => 'Ferdy Fitriansyah Rowi',
+                'npm' => 'G1A022082',
+                'password' => '12345678',
+            ],
 
-            // //8
-            // [
-            //     'name' => 'Anissa Shanniyah Aprilia',
-            //     'npm' => 'G1A022044',
-            //     'password' => '12345678',
-            // ],
+            //8
+            [
+                'name' => 'Anissa Shanniyah Aprilia',
+                'npm' => 'G1A022044',
+                'password' => '12345678',
+            ],
 
-            // //9
-            // [
-            //     'name' => 'Reyvano Arya Pulunggono',
-            //     'npm' => 'G1A022094',
-            //     'password' => '12345678',
-            // ],
+            //9
+            [
+                'name' => 'Reyvano Arya Pulunggono',
+                'npm' => 'G1A022094',
+                'password' => '12345678',
+            ],
 
-            // //10
-            // [
-            //     'name' => 'Dian Ardiyanti Saputri',
-            //     'npm' => 'G1A022084',
-            //     'password' => '12345678',
-            // ],
+            //10
+            [
+                'name' => 'Dian Ardiyanti Saputri',
+                'npm' => 'G1A022084',
+                'password' => '12345678',
+            ],
 
-            // //11
-            // [
-            //     'name' => 'Shalaudin Muhammad Sah',
-            //     'npm' => 'G1A022070',
-            //     'password' => '12345678',
-            // ],
+            //11
+            [
+                'name' => 'Shalaudin Muhammad Sah',
+                'npm' => 'G1A022070',
+                'password' => '12345678',
+            ],
 
-            // //12
-            // [
-            //     'name' => 'Attiya Dianti Fadli',
-            //     'npm' => 'G1A022002',
-            //     'password' => '12345678',
-            // ],
+            //12
+            [
+                'name' => 'Attiya Dianti Fadli',
+                'npm' => 'G1A022002',
+                'password' => '12345678',
+            ],
 
-            // //13
-            // [
-            //     'name' => 'Saniyyah Zhafirah',
-            //     'npm' => 'G1A022081',
-            //     'password' => '12345678',
-            // ],
+            //13
+            [
+                'name' => 'Saniyyah Zhafirah',
+                'npm' => 'G1A022081',
+                'password' => '12345678',
+            ],
 
-            // //14
-            // [
-            //     'name' => 'Revo Pratama',
-            //     'npm' => 'G1A022058',
-            //     'password' => '12345678',
-            // ],
+            //14
+            [
+                'name' => 'Revo Pratama',
+                'npm' => 'G1A022058',
+                'password' => '12345678',
+            ],
 
-            // //15
-            // [
-            //     'name' => 'Ari Setiawan',
-            //     'npm' => 'G1A022092',
-            //     'password' => '12345678',
-            // ],
+            //15
+            [
+                'name' => 'Ari Setiawan',
+                'npm' => 'G1A022092',
+                'password' => '12345678',
+            ],
 
-            // //16
-            // [
-            //     'name' => 'Kenia Nurma Feblia',
-            //     'npm' => 'G1A023004',
-            //     'password' => '12345678',
-            // ],      
+            //16
+            [
+                'name' => 'Kenia Nurma Feblia',
+                'npm' => 'G1A023004',
+                'password' => '12345678',
+            ],      
 
-            // //17
-            // [
-            //     'name' => 'Diosi Putri Arlita',
-            //     'npm' => 'G1A023012',
-            //     'password' => '12345678',
-            // ],
+            //17
+            [
+                'name' => 'Diosi Putri Arlita',
+                'npm' => 'G1A023012',
+                'password' => '12345678',
+            ],
 
-            // //18
-            // [
-            //     'name' => 'Ammar Siraj Ananda',
-            //     'npm' => 'G1A023021',
-            //     'password' => '12345678',
-            // ],
+            //18
+            [
+                'name' => 'Ammar Siraj Ananda',
+                'npm' => 'G1A023021',
+                'password' => '12345678',
+            ],
 
-            // //19
-            // [
-            //     'name' => 'Muhammad Hafizh Ario Diffo',
-            //     'npm' => 'G1A023032',
-            //     'password' => '12345678',
-            // ],
+            //19
+            [
+                'name' => 'Muhammad Hafizh Ario Diffo',
+                'npm' => 'G1A023032',
+                'password' => '12345678',
+            ],
 
-            // //20
-            // [
-            //     'name' => 'Ghazi Al-Ghifari',
-            //     'npm' => 'G1A023553',
-            //     'password' => '12345678',
-            // ],
+            //20
+            [
+                'name' => 'Ghazi Al-Ghifari',
+                'npm' => 'G1A023553',
+                'password' => '12345678',
+            ],
 
             // //21
             // [

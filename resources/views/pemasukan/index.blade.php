@@ -1,51 +1,62 @@
 <x-app-layout>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <div class="content-wrapper">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="font-weight-bold">Pemasukan</h3>
+                <h6 class="font-weight-normal mb-0">Pemasukan yang diterima oleh Kepala Bagian Administrasi dan Keuangan HIMATIF</h6>
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <!-- Kontainer untuk scroll horizontal -->
+                        <div style="overflow-x: auto; width: 100%; ">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                @if(auth()->user()->role === 'admin')
+                                <button class="btn btn-primary" data-toggle="modal" data-target="#modalTambahPemasukan">
+                                    <strong>Tambah Pemasukan</strong>
+                                </button>
+                                @endif
 
-      <div class="content-wrapper">
-          <div class="card">
-              <div class="card-body">
-                  <h3 class="font-weight-bold">Pemasukan</h3>
-                  <h6 class="font-weight-normal mb-0">Pemasukan yang diterima oleh Kepala Bagian Administrasi dan Keuangan HIMATIF</h6>
-                  <div class="row mt-4">
-                      <div class="col-12">
-                          <!-- Kontainer untuk scroll horizontal -->
-                          <div style="overflow-x: auto; width: 100%; ">
-                            @if(session('success'))
-                                <div class="alert alert-success">
-                                    {{ session('success') }}
-                                </div>
-                            @endif
+                                @if(auth()->user()->role === 'bendum')
+                                  <button class="btn btn-primary" data-toggle="modal" data-target="#modalTambahPemasukan">
+                                      <strong>Ajukan Pemasukan</strong>
+                                  </button>
+                              @endif
 
-                            @if(auth()->user()->role !== 'anggota' && auth()->user()->role !== 'bendum')
-                              <table id="dataPemasukan" class="table table-striped table-bordered" style="width: 100%; table-layout: auto;">
-                                  <thead>
-                                      <tr>
-                                          <th>No</th>
-                                          <th>Tanggal</th>
-                                          <th>Kategori</th>
-                                          <th>Uraian</th>
-                                          <th>Bidang</th>
-                                          <th>Nominal</th>
-                                          <th>Penanggungjawab</th>
-                                          <th>Dokumen/SPJ</th>
-                                          @if(!in_array(auth()->user()->role, ['anggota', 'bendum']))
-                                          <th>Status</th>
-                                          <th>Aksi</th>
-                                          @endif
-                                      </tr>
-                                  </thead>
-                                  <tbody>
-                                      @foreach ($pemasukans as $dt)
-                                      <tr>
-                                          <td>{{ $loop->iteration }}</td>
-                                          <td>{{ $dt->tanggal }}</td>
-                                          <td>{{ $dt->kategori }}</td>
-                                          <td>{{ $dt->uraian }}</td>
-                                          <td>{{ $dt->bidang }}</td>
-                                          <td>Rp {{ number_format($dt->nominal, 0, ',', '.') }}</td>
-                                          <td>{{ $dt->penanggungjawab }}</td>
-                                          <td>
-                                            @if ($dt->dokumen)
-                                                <a href="{{ asset('storage/' . $dt->dokumen) }}" target="_blank" class="btn btn-info btn-sm" style="padding: 10px 10px; font-size: 10px;">
+                            </div>
+                          @if(session('success'))
+                              <div class="alert alert-success">
+                                  {{ session('success') }}
+                              </div>
+                          @endif
+
+                          <table id="dataPemasukan" class="table table-striped table-bordered" style="width: 100%; table-layout: auto;">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Tanggal</th>
+                                    <th>Kategori</th>
+                                    <th>Uraian</th>
+                                    <th>Bidang</th>
+                                    <th>Nominal</th>
+                                    <th>Dokumen</th>
+                                    <th>Status</th>
+                                    @if (auth()->user()->role === 'admin')
+                                    <th>Aksi</th>
+                                    @endif
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($pemasukans as $index => $pemasukan)
+                                    <tr>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $pemasukan->tanggal }}</td>
+                                        <td>{{ $pemasukan->kategori }}</td>
+                                        <td>{{ $pemasukan->uraian }}</td>
+                                        <td>{{ $pemasukan->bidang }}</td>
+                                        <td>{{ number_format($pemasukan->nominal, 0, ',', '.') }}</td>
+                                        <td>
+                                            @if ($pemasukan->dokumen)
+                                                <a href="{{ asset('storage/' . $pemasukan->dokumen) }}" target="_blank" class="btn btn-info btn-sm" style="padding: 10px 10px; font-size: 10px;">
                                                     <i class="fa-regular fa-file-pdf"></i> Lihat Dokumen/SPJ
                                                 </a>
                                             @else
@@ -53,40 +64,35 @@
                                             @endif
                                         </td>
                                         <td>
-                                            @if($dt->status_verifikasi === 'pending')
-                                                <span class="badge bg-warning">Pending</span>
-                                                <form action="{{ route('pemasukan.approve', $dt->id) }}" method="POST" style="display:inline-block;">
-                                                    @csrf
-                                                    @method('PATCH')
-                                                    <button class="btn btn-success btn-sm" type="submit">Setujui</button>
-                                                </form>
-                                                <form action="{{ route('pemasukan.reject', $dt->id) }}" method="POST" style="display:inline-block;">
-                                                    @csrf
-                                                    @method('PATCH')
-                                                    <button class="btn btn-danger btn-sm" type="submit">Tolak</button>
-                                                </form>
-                                            @elseif($dt->status_verifikasi === 'approved')
-                                                <span class="badge bg-success">Disetujui</span>
+                                            @if (auth()->user()->role === 'admin')
+                                                @if ($pemasukan->status === 'diajukan')
+                                                    <button class="btn btn-success btn-sm approve-btn" data-id="{{ $pemasukan->id }}">Setujui</button>
+                                                    <button class="btn btn-danger btn-sm reject-btn" data-id="{{ $pemasukan->id }}">Tolak</button>
+                                                @else
+                                                    <span class="badge {{ $pemasukan->status === 'disetujui' ? 'bg-success' : 'bg-danger' }}">
+                                                        {{ ucfirst($pemasukan->status) }}
+                                                    </span>
+                                                @endif
                                             @else
-                                                <span class="badge bg-danger">Ditolak</span>
+                                                <span class="badge {{ $pemasukan->status === 'disetujui' ? 'bg-success' : ($pemasukan->status === 'ditolak' ? 'bg-danger' : 'bg-warning') }}">
+                                                    {{ ucfirst($pemasukan->status) }}
+                                                </span>
                                             @endif
                                         </td>
-                                        
-                                          @if(!in_array(auth()->user()->role, ['anggota', 'bendum']))
-                                          <td>
-                                           
-                                            <!-- Tombol Edit -->
-                                            <button 
-                                                class="btn btn-warning" 
-                                                style="font-size: 10px; padding: 10px 10px;" 
-                                                data-toggle="modal" 
-                                                data-target="#editPemasukanModal{{ $dt->id }}">
-                                                Edit
-                                            </button>
-
-                                        
-                                            <!-- Tombol Delete -->
-                                            <form action="{{ route('pemasukan.destroy', $dt->id) }}" method="POST" style="display:inline-block;">
+                                        @if (auth()->user()->role === 'admin')
+                                        <td class="d-flex justify-content-center">
+                                            @if ($pemasukan->status === 'disetujui')
+                                                <p>-</p>
+                                            @else
+                                            {{-- Edit --}}
+                                                {{-- <button 
+                                                    class="btn btn-warning mr-2" 
+                                                    style="font-size: 10px; padding: 10px 10px;" 
+                                                    data-toggle="modal" >
+                                                    Edit
+                                                </button> --}}
+                                                <!-- Delete -->  
+                                                <form action="{{ route('pemasukan.destroy', $pemasukan->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button 
@@ -96,35 +102,22 @@
                                                     onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
                                                     Delete
                                                 </button>
-                                            </form>   
-                                          </td>
-                                          @endif
-                                      </tr>
-                                      @endforeach
-                                  </tbody>
-                                  <div class="d-flex justify-content-between align-items-center mb-3">
-                                  @if(auth()->user()->role !== 'anggota' && auth()->user()->role !== 'bendum')
-                                  <button class="btn btn-primary" data-toggle="modal" data-target="#modalTambahPemasukan">
-                                      <strong>Tambah Pemasukan</strong>
-                                  </button>
-                                  @endif
-                              </table>
-                            @endif
-                              
-                                @if(auth()->user()->role !== 'anggota' && auth()->user()->role !== 'admin')
-                                    <button class="btn btn-primary" data-toggle="modal" data-target="#modalTambahPemasukan">
-                                        <strong>Ajukan Pemasukan</strong>
-                                    </button>
-                                @endif
-
-                                  </div>
-                            </div>   
-                        </div>
-                      </div>
+                                                </form>
+                                            @endif
+                                        </td>
+                                        @endif
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                     </div>
+                    </div>
                 </div>
-          </div>
-                  <!-- Modal Tambah Pemasukan -->
-                  <div class="modal fade" id="modalTambahPemasukan" tabindex="-1" aria-labelledby="createPemasukanModalLabel" aria-hidden="true">
+            </div>
+        </div>
+    </div>
+                <!-- Modal Tambah Pemasukan -->
+                <div class="modal fade" id="modalTambahPemasukan" tabindex="-1" aria-labelledby="createPemasukanModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <form action="{{ route('pemasukan.store') }}" method="POST" enctype="multipart/form-data">
@@ -149,10 +142,9 @@
                                             <div class="col">
                                                 <select class="form-control" id="kategori" name="kategori" required>
                                                     <option value="" disabled selected>Pilih Kategori</option>
-                                                    <option value="proposal">Proposal</option>
                                                     <option value="sisa_proker">Sisa Proker</option>
-                                                    {{-- <option value="kas_wajib">Kas Wajib</option> --}}
-                                                    <option value="lainnya">Lainnya</option>
+                                                    <option value="inventaris">Iventaris</option>
+                                                    <option value="lainnya">Proposal</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -183,15 +175,22 @@
                                             </div>
                                         </div>
                                         <div>
-                                            <div class="col font-weight-bold mt-3 mb-2">Penanggungjawab</div>
-                                            <div class="col">
-                                                <input type="text" class="form-control" id="penanggungjawab" name="penanggungjawab" required>
-                                            </div>
-                                        </div>
-                                        <div>
                                             <div class="col font-weight-bold mt-3 mb-2">Dokumen Pendukung</div>
                                             <div class="col">
                                                 <input type="file" class="form-control" id="dokumen" name="dokumen">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="col font-weight-bold mt-3 mb-2">Status</div>
+                                            <div class="col">
+                                                <select class="form-control" id="status" name="status" required>
+                                                    <option value="" disabled selected>Pilih Status</option>
+                                                    <option value="diajukan">Diajukan</option>
+                                                    @if(auth()->user()->role == 'admin')
+                                                    <option value="disetujui">Disetujui</option>
+                                                    <option value="ditolak">Ditolak</option>
+                                                    @endif
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
@@ -204,86 +203,64 @@
                         </div>
                     </div>
                 </div>
-                
 
+                {{-- datatables --}}
+                <script>
+                    $(document).ready(function() {
+                        $('#dataPemasukan').DataTable();
+                    });
 
-                  @foreach ($pemasukans as $dt)
-                      <!-- Modal Edit Pemasukan -->
-                      <div class="modal fade" id="editPemasukanModal{{ $dt->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <form action="{{ route('pemasukan.update', $dt->id) }}" method="POST" enctype="multipart/form-data">
-                                    @csrf
-                                    @method('PUT')
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="editPemasukanModalLabel{{ $dt->id }}">Edit Pemasukan</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <!-- Input Form -->
-                                        <div class="mb-3">
-                                            <label for="tanggal{{ $dt->id }}" class="form-label">Tanggal</label>
-                                            <input type="date" class="form-control" id="tanggal{{ $dt->id }}" name="tanggal" value="{{ $dt->tanggal }}" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="kategori{{ $dt->id }}" class="form-label">Kategori</label>
-                                            <select class="form-select" id="kategori{{ $dt->id }}" name="kategori" required>
-                                                <option value="proposal" {{ $dt->kategori === 'proposal' ? 'selected' : '' }}>Proposal</option>
-                                                <option value="sisa_proker" {{ $dt->kategori === 'sisa_proker' ? 'selected' : '' }}>Sisa Proker</option>
-                                                {{-- <option value="kas_wajib" {{ $dt->kategori === 'kas_wajib' ? 'selected' : '' }}>Kas Wajib</option> --}}
-                                            </select>
-                                        </div>
-                                        <div class="mb-3">
-                                          <label for="uraian{{ $dt->id }}" class="form-label">Uraian</label>
-                                          <textarea class="form-control" id="uraian{{ $dt->id }}" name="uraian" rows="3" required>{{ $dt->uraian }}</textarea>
-                                      </div>
-                                      <div class="mb-3">
-                                          <label for="bidang{{ $dt->id }}" class="form-label">Bidang</label>
-                                          <select class="form-select" id="bidang{{ $dt->id }}" name="bidang" required>
-                                              <option value="Inti" {{ $dt->bidang === 'Inti' ? 'selected' : '' }}>Inti</option>
-                                              <option value="PSDM" {{ $dt->bidang === 'PSDM' ? 'selected' : '' }}>PSDM</option>
-                                              <option value="Humas" {{ $dt->bidang === 'Humas' ? 'selected' : '' }}>Kerohanian</option>
-                                              <option value="Kominfo" {{ $dt->bidang === 'Kominfo' ? 'selected' : '' }}>Kominfo</option>
-                                              <option value="Danus" {{ $dt->bidang === 'Danus' ? 'selected' : '' }}>Dana Usaha</option>
-                                              <option value="Minbak" {{ $dt->bidang === 'Minbak' ? 'selected' : '' }}>Minat Bakat</option>
-                                          </select>
-                                      </div>
-                                      <div class="mb-3">
-                                          <label for="nominal{{ $dt->id }}" class="form-label">Nominal</label>
-                                          <input type="number" class="form-control" id="nominal{{ $dt->id }}" name="nominal" value="{{ $dt->nominal }}" required>
-                                      </div>
-                                      <div class="mb-3">
-                                          <label for="penanggungjawab{{ $dt->id }}" class="form-label">Penanggungjawab</label>
-                                          <input type="text" class="form-control" id="penanggungjawab{{ $dt->id }}" name="penanggungjawab" value="{{ $dt->penanggungjawab }}" required>
-                                      </div>
-                                      <div class="mb-3">
-                                          <label for="dokumen{{ $dt->id }}" class="form-label">Dokumen Pendukung</label>
-                                          <input type="file" class="form-control" id="dokumen{{ $dt->id }}" name="dokumen">
-                                          @if($dt->dokumen)
-                                          <p class="mt-2">Dokumen saat ini: 
-                                            <a href="{{ asset('storage/' . $dt->dokumen) }}" target="_blank">Lihat</a>
-                                          </p>
-                                          @endif
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const approveButtons = document.querySelectorAll('.approve-btn');
+                        const rejectButtons = document.querySelectorAll('.reject-btn');
 
-                                      </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                        <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    
-                  @endforeach
+                        approveButtons.forEach(button => {
+                            button.addEventListener('click', function () {
+                                handleAction(this.dataset.id, 'approve');
+                            });
+                        });
 
-                  {{-- Ajukan Pemasukan (Bendahara Umum) --}}
+                        rejectButtons.forEach(button => {
+                            button.addEventListener('click', function () {
+                                handleAction(this.dataset.id, 'reject');
+                            });
+                        });
 
-                  {{-- datatables --}}
-                  <script>
-                      $(document).ready(function() {
-                          $('#dataPemasukan').DataTable();
-                      });
-                  </script>
+                        function handleAction(id, action) {
+                            const url = `/pemasukan/${action}/${id}`;
+                            const confirmMessage = action === 'approve'
+                                ? 'Apakah Anda yakin ingin menyetujui pemasukan ini?'
+                                : 'Apakah Anda yakin ingin menolak pemasukan ini?';
+
+                            if (confirm(confirmMessage)) {
+                                fetch(url, {
+                                    method: 'POST',
+                                    headers: {
+                                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                                        'Content-Type': 'application/json',
+                                    },
+                                })
+                                    .then(response => {
+                                        if (!response.ok) {
+                                            throw new Error(`HTTP error! status: ${response.status}`);
+                                        }
+                                        return response.json();
+                                    })
+                                    .then(data => {
+                                        if (data.success) {
+                                            alert(`Pemasukan berhasil ${action === 'approve' ? 'disetujui' : 'ditolak'}.`);
+                                            location.reload();
+                                        } else {
+                                            alert('Gagal memproses tindakan: ' + data.message);
+                                        }
+                                    })
+                                    .catch(error => {
+                                        console.error('Error:', error);
+                                        alert('Terjadi kesalahan saat memproses tindakan.');
+                                    });
+                            }
+                        }
+                    });
+
+                </script>
 </x-app-layout>

@@ -3,15 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Pengeluaran extends Model
 {
-    use HasFactory, Notifiable;
-
-    protected $table = 'pengeluarans';
+    use HasFactory;
 
     protected $fillable = [
         'tanggal',
@@ -19,14 +15,12 @@ class Pengeluaran extends Model
         'uraian',
         'bidang',
         'nominal',
-        'penanggungjawab',
         'dokumen',
+        'status',
     ];
 
-    public function saldo(): BelongsTo
+    public function laporan()
     {
-        return $this->belongsTo(Saldo::class);
+        return $this->hasMany(Laporan::class);
     }
-    
 }
-
